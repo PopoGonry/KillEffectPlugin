@@ -1,8 +1,8 @@
-package com.popogonry.killEffect;
+package com.popogonry.killEffectPlugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class KillEffect extends JavaPlugin {
+public final class KillEffectPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
