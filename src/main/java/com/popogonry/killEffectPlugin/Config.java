@@ -43,7 +43,26 @@ public abstract class Config {
         config = YamlConfiguration.loadConfiguration(file);
     }
 
+    public boolean delete() {
+        if (file != null && file.exists()) {
+            return file.delete();  // 삭제 성공 시 true 반환
+        }
+        return false;  // 파일이 없거나 삭제 실패 시 false 반환
+    }
+
     public abstract void loadDefaults();
     public abstract void applySettings();
+
+    protected void writeInitialTemplateIfNotExists(String defaultContent) {
+        if (!file.exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                java.nio.file.Files.write(file.toPath(), defaultContent.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
