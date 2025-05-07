@@ -3,6 +3,7 @@ package com.popogonry.killEffectPlugin.killEffect;
 
 import com.popogonry.killEffectPlugin.KillEffectPlugin;
 
+import java.io.File;
 import java.util.*;
 
 public class KillEffectRepository {
@@ -22,6 +23,8 @@ public class KillEffectRepository {
         this.configBasePath = KillEffectPlugin.getServerInstance().getDataFolder().getAbsolutePath();
         this.killEffectSetDataConfig = new KillEffectSetDataConfig(configBasePath, KILL_EFFECT_NAME);
         this.userKillEffectSetDataConfig = new UserKillEffectSetDataConfig(configBasePath, USER_KILL_EFFECT_NAME);
+        File dir = new File(configBasePath + "/killEffects");
+        if(!dir.exists()) dir.mkdirs();
     }
 
     public void reloadConfig() {
@@ -61,8 +64,35 @@ public class KillEffectRepository {
     }
 
     public void storeKillEffect(KillEffect killEffect) {
-        private KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "\")
+        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffect.getName() + ".yml");
+        killEffectDataConfig.storeKillEffectData(killEffect);
+        killEffectHashMap.remove(killEffect.getName());
+    }
+    public void saveKillEffect(KillEffect killEffect) {
+        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffect.getName() + ".yml");
+        killEffectDataConfig.storeKillEffectData(killEffect);
+    }
+    public void loadKillEffect(String killEffectName) {
+        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
+        killEffectHashMap.put(killEffectName, killEffectDataConfig.loadKillEffectData());
     }
 
+    public void storeAllKillEffects() {
+        for (String killEffectName : killEffectHashMap.keySet()) {
+            storeKillEffect(killEffectHashMap.get(killEffectName));
+        }
+        killEffectHashMap.clear();
+    }
 
+    public void saveAllKillEffects() {
+        for (String killEffectName : killEffectHashMap.keySet()) {
+            storeKillEffect(killEffectHashMap.get(killEffectName));
+        }
+    }
+
+    public void loadAllKillEffects() {
+        for (String killEffectName : killEffectSet) {
+            loadKillEffect(killEffectName);
+        }
+    }
 }
