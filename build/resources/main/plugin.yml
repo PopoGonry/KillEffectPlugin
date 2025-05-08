@@ -1,0 +1,7 @@
+name: KillEffect
+version: '1.0-SNAPSHOT'
+main: com.popogonry.killEffectPlugin.KillEffectPlugin
+api-version: '1.21'
+
+commands:
+  ke:
