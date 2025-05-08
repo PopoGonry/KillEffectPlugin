@@ -16,7 +16,7 @@ public class KillEffectDataConfig extends Config {
         getConfig().set("MysticMob-Name", killEffect.getMysticmobName());
         getConfig().set("Lore", killEffect.getLore());
         getConfig().set("Cooldown", killEffect.getCooldown());
-        getConfig().set("Active-Type", killEffect.getActiveType());
+        getConfig().set("Active-Type", killEffect.getActiveType().toString());
         super.store();
     }
 
@@ -26,7 +26,7 @@ public class KillEffectDataConfig extends Config {
                 getConfig().getString("MysticMob-Name"),
                 getConfig().getString("Lore"),
                 (Double) getConfig().get("Cooldown"),
-                (KillEffectActiveType) getConfig().get("Active-Type")
+                KillEffectActiveType.valueOf(getConfig().getString("Active-Type"))
         );
     }
 

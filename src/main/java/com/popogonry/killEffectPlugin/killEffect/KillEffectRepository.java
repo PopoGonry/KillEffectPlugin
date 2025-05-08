@@ -86,7 +86,8 @@ public class KillEffectRepository {
     }
 
     public void storeAllKillEffects() {
-        for (String killEffectName : killEffectHashMap.keySet()) {
+        Set<String> keySet = new HashSet<>(killEffectHashMap.keySet());
+        for (String killEffectName : keySet) {
             storeKillEffect(killEffectHashMap.get(killEffectName));
         }
         killEffectHashMap.clear();

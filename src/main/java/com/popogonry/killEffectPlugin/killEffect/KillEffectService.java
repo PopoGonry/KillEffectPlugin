@@ -4,8 +4,6 @@ import org.bukkit.entity.Player;
 
 public class KillEffectService {
 
-    KillEffectRepository killEffectRepository = new KillEffectRepository();
-
     public boolean createKillEffect(String name, String mysticmobName, String lore, double cooldown, KillEffectActiveType activeType) {
 
         // 같은 이름의 킬 이펙트가 존재할 시, 예외
