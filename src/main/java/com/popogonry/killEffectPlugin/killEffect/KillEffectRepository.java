@@ -2,6 +2,9 @@ package com.popogonry.killEffectPlugin.killEffect;
 
 
 import com.popogonry.killEffectPlugin.KillEffectPlugin;
+import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectDataConfig;
+import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectSetDataConfig;
+import com.popogonry.killEffectPlugin.killEffect.dataConfig.UserKillEffectSetDataConfig;
 
 import java.io.File;
 import java.util.*;
@@ -72,9 +75,14 @@ public class KillEffectRepository {
         KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffect.getName() + ".yml");
         killEffectDataConfig.storeKillEffectData(killEffect);
     }
-    public void loadKillEffect(String killEffectName) {
+    public boolean loadKillEffect(String killEffectName) {
         KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
+
+        // 파일이 존재 하지 않을 시, 예외
+        if(killEffectDataConfig == null) return false;
+
         killEffectHashMap.put(killEffectName, killEffectDataConfig.loadKillEffectData());
+        return true;
     }
 
     public void storeAllKillEffects() {
@@ -91,8 +99,12 @@ public class KillEffectRepository {
     }
 
     public void loadAllKillEffects() {
-        for (String killEffectName : killEffectSet) {
-            loadKillEffect(killEffectName);
+        HashSet<String> set = new HashSet<>(killEffectSet);
+
+        for (String killEffectName : set) {
+            if(!loadKillEffect(killEffectName)) {
+                killEffectSet.remove(killEffectName);
+            }
         }
     }
 }

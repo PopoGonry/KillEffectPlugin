@@ -1,4 +1,4 @@
-package com.popogonry.killEffectPlugin.killEffect;
+package com.popogonry.killEffectPlugin.killEffect.dataConfig;
 
 import com.popogonry.killEffectPlugin.Config;
 

@@ -1,10 +1,8 @@
-package com.popogonry.killEffectPlugin.killEffect;
+package com.popogonry.killEffectPlugin.killEffect.dataConfig;
 
 import com.popogonry.killEffectPlugin.Config;
-
-import java.lang.module.Configuration;
-import java.util.Set;
-import java.util.UUID;
+import com.popogonry.killEffectPlugin.killEffect.KillEffect;
+import com.popogonry.killEffectPlugin.killEffect.KillEffectActiveType;
 
 public class KillEffectDataConfig extends Config {
 
