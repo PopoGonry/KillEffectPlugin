@@ -66,20 +66,38 @@ public class KillEffectRepository {
         userKillEffectHashMap.put(uuid, userKillEffectSetDataConfig.loadUserKillEffectSet(uuid));
     }
 
-    public void storeKillEffect(KillEffect killEffect) {
-        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffect.getName() + ".yml");
-        killEffectDataConfig.storeKillEffectData(killEffect);
-        killEffectHashMap.remove(killEffect.getName());
+    public boolean storeKillEffect(String killEffectName) {
+        // 메모리 상에 저장되어 있지 않으면,
+        if(!killEffectHashMap.containsKey(killEffectName)) {
+            return false;
+        }
+
+        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
+        killEffectDataConfig.storeKillEffectData(killEffectHashMap.get(killEffectName));
+        killEffectHashMap.remove(killEffectName);
+        return true;
     }
-    public void saveKillEffect(KillEffect killEffect) {
-        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffect.getName() + ".yml");
-        killEffectDataConfig.storeKillEffectData(killEffect);
+    public boolean saveKillEffect(String killEffectName) {
+        // 메모리 상에 저장되어 있지 않으면,
+        if(!killEffectHashMap.containsKey(killEffectName)) {
+            return false;
+        }
+
+        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
+        killEffectDataConfig.storeKillEffectData(killEffectHashMap.get(killEffectName));
+        return true;
     }
     public boolean loadKillEffect(String killEffectName) {
-        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
 
         // 파일이 존재 하지 않을 시, 예외
-        if(killEffectDataConfig == null) return false;
+        File dataFile = new File(configBasePath + "/killEffects", killEffectName + ".yml");
+        if (!dataFile.exists()) {
+            killEffectSet.remove(killEffectName);
+            saveKillEffectSet();
+            return false;
+        }
+
+        KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
 
         killEffectHashMap.put(killEffectName, killEffectDataConfig.loadKillEffectData());
         return true;
@@ -88,14 +106,13 @@ public class KillEffectRepository {
     public void storeAllKillEffects() {
         Set<String> keySet = new HashSet<>(killEffectHashMap.keySet());
         for (String killEffectName : keySet) {
-            storeKillEffect(killEffectHashMap.get(killEffectName));
+            storeKillEffect(killEffectName);
         }
-        killEffectHashMap.clear();
     }
 
     public void saveAllKillEffects() {
         for (String killEffectName : killEffectHashMap.keySet()) {
-            storeKillEffect(killEffectHashMap.get(killEffectName));
+            saveKillEffect(killEffectName);
         }
     }
 
@@ -103,9 +120,7 @@ public class KillEffectRepository {
         HashSet<String> set = new HashSet<>(killEffectSet);
 
         for (String killEffectName : set) {
-            if(!loadKillEffect(killEffectName)) {
-                killEffectSet.remove(killEffectName);
-            }
+            loadKillEffect(killEffectName);
         }
     }
 }
