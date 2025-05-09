@@ -1,6 +1,7 @@
 package com.popogonry.killEffectPlugin.killEffect;
 
 import com.popogonry.killEffectPlugin.Reference;
+import com.popogonry.killEffectPlugin.killEffect.gui.KillEffectGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,25 +41,31 @@ public class KillEffectCommand implements CommandExecutor {
 
                 }
             }
+            if(strings[0].equalsIgnoreCase("gui")) {
+                KillEffectGUI.openKillEffectSetGUI((Player) commandSender, 1);
+            }
+
+
+
         } else if (strings.length == 2) {
             if (commandSender.isOp()) {
                 if (strings[0].equalsIgnoreCase("store")) {
                     if (killEffectRepository.storeKillEffect(strings[1])) {
-                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + ": Store Succeed.");
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + " : Store Succeed.");
                     } else {
-                        commandSender.sendMessage(Reference.prefix_error + strings[1] + ": Store Failed.");
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + " : Store Failed.");
                     }
                 } else if (strings[0].equalsIgnoreCase("load")) {
                     if (killEffectRepository.loadKillEffect(strings[1])) {
-                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + ": Load Succeed.");
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + " : Load Succeed.");
                     } else {
-                        commandSender.sendMessage(Reference.prefix_error + strings[1] + ": Load Failed.");
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + " : Load Failed.");
                     }
                 } else if (strings[0].equalsIgnoreCase("save")) {
                     if (killEffectRepository.saveKillEffect(strings[1])) {
-                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + ": Save Succeed.");
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + " : Save Succeed.");
                     } else {
-                        commandSender.sendMessage(Reference.prefix_error + strings[1] + ": Save Failed.");
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + " : Save Failed.");
                     }
                 } else if (strings[0].equalsIgnoreCase("add")) {
                     if (killEffectService.createKillEffect(strings[1], "mysticmobName", "lore", 10.0, KillEffectActiveType.ALL)) {
@@ -99,6 +106,14 @@ public class KillEffectCommand implements CommandExecutor {
                         return false;
                     }
                     commandSender.sendMessage(String.valueOf(killEffectService.removeKillEffectFromUser(player, strings[2])));
+                }
+                else if (strings[0].equalsIgnoreCase("set")) {
+                    Player player = Bukkit.getOfflinePlayer(strings[1]).getPlayer();
+                    if (player == null) {
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + " 플레이어는 서버에 존재하지 않습니다.");
+                        return false;
+                    }
+                    commandSender.sendMessage(String.valueOf(killEffectService.setUserKillEffect(player, strings[2])));
                 }
             }
         }

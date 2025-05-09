@@ -32,6 +32,7 @@ public final class KillEffectPlugin extends JavaPlugin {
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             killEffectRepository.loadUserKillEffectSet(onlinePlayer.getUniqueId());
+            killEffectRepository.loadUserKillEffect(onlinePlayer.getUniqueId());
         }
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Load Complete!");
@@ -54,6 +55,7 @@ public final class KillEffectPlugin extends JavaPlugin {
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             killEffectRepository.storeUserKillEffectSet(onlinePlayer.getUniqueId());
+            killEffectRepository.storeUserKillEffect(onlinePlayer.getUniqueId());
         }
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Store Complete!");

@@ -1,11 +1,8 @@
 package com.popogonry.killEffectPlugin.killEffect;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -71,19 +68,19 @@ public class KillEffectService {
             return false;
         }
 
-        // 플레이어가 킬 이펙트를 가지고 있을 시,
-        if(KillEffectRepository.userKillEffectHashMap.get(player.getUniqueId()).contains(killEffectName)) {
-            return false;
-        }
-
         // Player가 온라인이 아닐 시,
         if(!player.isOnline()) {
             killEffectRepository.loadUserKillEffectSet(player.getUniqueId());
         }
 
-        Set<String> killEffectsSet = KillEffectRepository.userKillEffectHashMap.get(player.getUniqueId());
+        // 플레이어가 킬 이펙트를 가지고 있을 시,
+        if(KillEffectRepository.userKillEffectSetHashMap.get(player.getUniqueId()).contains(killEffectName)) {
+            return false;
+        }
+
+        Set<String> killEffectsSet = KillEffectRepository.userKillEffectSetHashMap.get(player.getUniqueId());
         killEffectsSet.add(killEffectName);
-        KillEffectRepository.userKillEffectHashMap.put(player.getUniqueId(), killEffectsSet);
+        KillEffectRepository.userKillEffectSetHashMap.put(player.getUniqueId(), killEffectsSet);
 
         // Player가 온라인일 시,
         if(player.isOnline()) {
@@ -103,46 +100,75 @@ public class KillEffectService {
             return false;
         }
 
-        // 플레이어가 킬 이펙트를 가지고 있지 않을 시,
-        if(!KillEffectRepository.userKillEffectHashMap.get(player.getUniqueId()).contains(killEffectName)) {
-            return false;
-        }
-
-        // Player가 서버에 없을 경우,
+        // Player가 온라인이 아닐 시,
         if(!player.isOnline()) {
             killEffectRepository.loadUserKillEffectSet(player.getUniqueId());
         }
 
-        Set<String> killEffectsSet = KillEffectRepository.userKillEffectHashMap.get(player.getUniqueId());
-        killEffectsSet.remove(killEffectName);
-        KillEffectRepository.userKillEffectHashMap.put(player.getUniqueId(), killEffectsSet);
+        // 플레이어가 킬 이펙트를 가지고 있지 않을 시,
+        if(!KillEffectRepository.userKillEffectSetHashMap.get(player.getUniqueId()).contains(killEffectName)) {
+            return false;
+        }
 
-        // Player가 서버에 있을 경우,
+        Set<String> killEffectsSet = KillEffectRepository.userKillEffectSetHashMap.get(player.getUniqueId());
+        killEffectsSet.remove(killEffectName);
+        KillEffectRepository.userKillEffectSetHashMap.put(player.getUniqueId(), killEffectsSet);
+
+        // Player가 온라인일 시,
         if(player.isOnline()) {
             killEffectRepository.saveUserKillEffectSet(player.getUniqueId());
         }
-        // Player가 서버에 없을 경우,
+        // Player가 온라인이 아닐 시,
         else {
             killEffectRepository.storeUserKillEffectSet(player.getUniqueId());
 
         }
         return true;
     }
+    public boolean setUserKillEffect(Player player, String killEffectName) {
+        // 킬 이펙트가 존재하지 않을 시, 예외
+        if(!KillEffectRepository.killEffectSet.contains(killEffectName)) {
+            return false;
+        }
 
+        // Player가 온라인이 아닐 시,
+        if(!player.isOnline()) {
+            killEffectRepository.loadUserKillEffect(player.getUniqueId());
+        }
 
+        // 플레이어가 이미 같은 킬 이펙트를 장착 중일 시,
+        if(KillEffectRepository.userKillEffectHashMap.getOrDefault(player.getUniqueId(), "").equals(killEffectName)) {
+            return false;
+        }
 
+        // 플레이어가 킬 이펙트를 가지고 있지 않을 시,
+        if(!KillEffectRepository.userKillEffectSetHashMap.get(player.getUniqueId()).contains(killEffectName)) {
+            return false;
+        }
 
+        KillEffectRepository.userKillEffectHashMap.put(player.getUniqueId(), killEffectName);
 
+        // Player가 온라인일 시,
+        if(player.isOnline()) {
+            killEffectRepository.saveUserKillEffect(player.getUniqueId());
+        }
+        // Player가 온라인이 아닐 시,
+        else {
+            killEffectRepository.storeUserKillEffect(player.getUniqueId());
 
+        }
+        return true;
 
-
-
+    }
 
     public void printUserKillEffectList(CommandSender sender) {
-        for (UUID uuid : KillEffectRepository.userKillEffectHashMap.keySet()) {
-            StringBuilder sb = new StringBuilder(KillEffectRepository.userKillEffectHashMap.get(uuid).stream().collect(Collectors.joining(", ")));
+        for (UUID uuid : KillEffectRepository.userKillEffectSetHashMap.keySet()) {
+            StringBuilder sb = new StringBuilder(KillEffectRepository.userKillEffectSetHashMap.get(uuid).stream().collect(Collectors.joining(", ")));
 
-            sender.sendMessage(uuid.toString() + " : " + sb);
+            sender.sendMessage("Set / " + uuid.toString() + " : " + sb);
+        }
+        for (UUID uuid : KillEffectRepository.userKillEffectHashMap.keySet()) {
+            sender.sendMessage("KE / " + uuid.toString() + " : " + KillEffectRepository.userKillEffectHashMap.get(uuid));
         }
     }
 

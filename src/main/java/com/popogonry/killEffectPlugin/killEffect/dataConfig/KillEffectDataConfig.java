@@ -8,7 +8,7 @@ public class KillEffectDataConfig extends Config {
 
     public KillEffectDataConfig(String basePath, String fileName) {
         super(basePath, fileName);
-        loadDefaults();
+//        loadDefaults();
     }
 
     public void storeKillEffectData(KillEffect killEffect) {
@@ -16,6 +16,7 @@ public class KillEffectDataConfig extends Config {
         getConfig().set("MysticMob-Name", killEffect.getMysticmobName());
         getConfig().set("Lore", killEffect.getLore());
         getConfig().set("Cooldown", killEffect.getCooldown());
+        getConfig().set("ActiveType List", "( MOB / PLAYER / ALL )");
         getConfig().set("Active-Type", killEffect.getActiveType().toString());
         super.store();
     }

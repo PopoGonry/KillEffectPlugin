@@ -4,30 +4,34 @@ package com.popogonry.killEffectPlugin.killEffect;
 import com.popogonry.killEffectPlugin.KillEffectPlugin;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectSetDataConfig;
+import com.popogonry.killEffectPlugin.killEffect.dataConfig.UserKillEffectDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.UserKillEffectSetDataConfig;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.util.*;
 
 public class KillEffectRepository {
 
-    private static final String KILL_EFFECT_NAME = "killEffect.yml";
+    private static final String KILL_EFFECT_SET_NAME = "killEffectSet.yml";
+    private static final String USER_KILL_EFFECT_SET_NAME = "userKillEffectSet.yml";
     private static final String USER_KILL_EFFECT_NAME = "userKillEffect.yml";
     private final String configBasePath;
 
     private final KillEffectSetDataConfig killEffectSetDataConfig;
     private final UserKillEffectSetDataConfig userKillEffectSetDataConfig;
+    private final UserKillEffectDataConfig userKillEffectDataConfig;
 
     public static HashSet<String> killEffectSet = new HashSet<>();
     public static HashMap<String, KillEffect> killEffectHashMap = new HashMap<>();
-    public static HashMap<UUID, Set<String>> userKillEffectHashMap = new HashMap<>();
+    public static HashMap<UUID, Set<String>> userKillEffectSetHashMap = new HashMap<>();
+    public static HashMap<UUID, String> userKillEffectHashMap = new HashMap<>();
 
 
     public KillEffectRepository() {
         this.configBasePath = KillEffectPlugin.getServerInstance().getDataFolder().getAbsolutePath();
-        this.killEffectSetDataConfig = new KillEffectSetDataConfig(configBasePath, KILL_EFFECT_NAME);
-        this.userKillEffectSetDataConfig = new UserKillEffectSetDataConfig(configBasePath, USER_KILL_EFFECT_NAME);
+        this.killEffectSetDataConfig = new KillEffectSetDataConfig(configBasePath, KILL_EFFECT_SET_NAME);
+        this.userKillEffectSetDataConfig = new UserKillEffectSetDataConfig(configBasePath, USER_KILL_EFFECT_SET_NAME);
+        this.userKillEffectDataConfig = new UserKillEffectDataConfig(configBasePath, USER_KILL_EFFECT_NAME);
         File dir = new File(configBasePath + "/killEffects");
         if(!dir.exists()) dir.mkdirs();
     }
@@ -56,12 +60,12 @@ public class KillEffectRepository {
     }
 
     public void storeUserKillEffectSet(UUID uuid) {
-        userKillEffectSetDataConfig.storeUserKillEffectSet(uuid, userKillEffectHashMap.get(uuid));
-        userKillEffectHashMap.remove(uuid);
+        userKillEffectSetDataConfig.storeUserKillEffectSet(uuid, userKillEffectSetHashMap.get(uuid));
+        userKillEffectSetHashMap.remove(uuid);
     }
 
     public void saveUserKillEffectSet(UUID uuid) {
-        userKillEffectSetDataConfig.storeUserKillEffectSet(uuid, userKillEffectHashMap.get(uuid));
+        userKillEffectSetDataConfig.storeUserKillEffectSet(uuid, userKillEffectSetHashMap.get(uuid));
     }
 
     public void loadUserKillEffectSet(UUID uuid) {
@@ -69,7 +73,35 @@ public class KillEffectRepository {
         if(killEffectSet == null) {
             killEffectSet = new HashSet<>();
         }
-        userKillEffectHashMap.put(uuid, killEffectSet);
+        userKillEffectSetHashMap.put(uuid, killEffectSet);
+    }
+
+    public boolean storeUserKillEffect(UUID uuid) {
+        // userKillEffectHashMap에 Player의 KillEffect이 없을 시, 예외
+        if(!userKillEffectHashMap.containsKey(uuid)) {
+            return false;
+        }
+        userKillEffectDataConfig.storeUserKillEffectData(uuid, userKillEffectHashMap.get(uuid));
+        userKillEffectHashMap.remove(uuid);
+        return true;
+    }
+
+    public boolean saveUserKillEffect(UUID uuid) {
+        // userKillEffectHashMap에 Player의 KillEffect이 없을 시, 예외
+        if(!userKillEffectHashMap.containsKey(uuid)) {
+            return false;
+        }
+        userKillEffectDataConfig.storeUserKillEffectData(uuid, userKillEffectHashMap.get(uuid));
+        return true;
+    }
+
+    public boolean loadUserKillEffect(UUID uuid) {
+        String killEffectName = userKillEffectDataConfig.loadUserKillEffectData(uuid);
+        if(killEffectName == null) {
+            return false;
+        }
+        userKillEffectHashMap.put(uuid, killEffectName);
+        return true;
     }
 
     public boolean storeKillEffect(String killEffectName) {
