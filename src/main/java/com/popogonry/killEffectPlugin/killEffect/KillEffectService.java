@@ -1,5 +1,7 @@
 package com.popogonry.killEffectPlugin.killEffect;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -74,7 +76,7 @@ public class KillEffectService {
             return false;
         }
 
-        // Player가 서버에 없을 경우,
+        // Player가 온라인이 아닐 시,
         if(!player.isOnline()) {
             killEffectRepository.loadUserKillEffectSet(player.getUniqueId());
         }
@@ -83,11 +85,11 @@ public class KillEffectService {
         killEffectsSet.add(killEffectName);
         KillEffectRepository.userKillEffectHashMap.put(player.getUniqueId(), killEffectsSet);
 
-        // Player가 서버에 있을 경우,
+        // Player가 온라인일 시,
         if(player.isOnline()) {
             killEffectRepository.saveUserKillEffectSet(player.getUniqueId());
         }
-        // Player가 서버에 없을 경우,
+        // Player가 온라인이 아닐 시,
         else {
             killEffectRepository.storeUserKillEffectSet(player.getUniqueId());
 

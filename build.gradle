@@ -58,22 +58,22 @@ processResources {
     }
 }
 
-//    노트북
-
-//jar {
-//    archiveFileName = 'KillEffectPlugin.jar'
-//    destinationDirectory = file("C:\\Users\\rhtjd\\Desktop\\플러그인_개발_서버_모음\\1.21.1\\plugins")
-//    manifest {
-//        attributes 'Main-Class': 'com.popogonry.killEffectPlugin.KillEffectPlugin'
-//    }
-//}
-
-// 자취방
+// 노트북
 
 jar {
     archiveFileName = 'KillEffectPlugin.jar'
-    destinationDirectory = file("C:\\Users\\rhtjd\\바탕 화면\\마인크래프트 플러그인 개발\\1.21.1\\plugins")
+    destinationDirectory = file("C:\\Users\\rhtjd\\Desktop\\플러그인_개발_서버_모음\\1.21.1\\plugins")
     manifest {
         attributes 'Main-Class': 'com.popogonry.killEffectPlugin.KillEffectPlugin'
     }
 }
+
+// 자취방
+
+//jar {
+//    archiveFileName = 'KillEffectPlugin.jar'
+//    destinationDirectory = file("C:\\Users\\rhtjd\\바탕 화면\\마인크래프트 플러그인 개발\\1.21.1\\plugins")
+//    manifest {
+//        attributes 'Main-Class': 'com.popogonry.killEffectPlugin.KillEffectPlugin'
+//    }
+//}
