@@ -1,6 +1,7 @@
 package com.popogonry.killEffectPlugin;
 
 import com.popogonry.killEffectPlugin.killEffect.KillEffectCommand;
+import com.popogonry.killEffectPlugin.killEffect.KillEffectEvent;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectRepository;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,6 +17,9 @@ public final class KillEffectPlugin extends JavaPlugin {
         // Plugin startup logic
         serverInstance = this;
 
+        getServer().getPluginManager().registerEvents(new KillEffectEvent(), this);
+
+
         getServer().getPluginCommand("ke").setExecutor(new KillEffectCommand());
 
         // killEffect data load
@@ -25,6 +29,10 @@ public final class KillEffectPlugin extends JavaPlugin {
 
         killEffectRepository.loadKillEffectSet();
         killEffectRepository.loadAllKillEffects();
+
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            killEffectRepository.loadUserKillEffectSet(onlinePlayer.getUniqueId());
+        }
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Load Complete!");
 
@@ -43,6 +51,10 @@ public final class KillEffectPlugin extends JavaPlugin {
 
         killEffectRepository.storeKillEffectSet();
         killEffectRepository.storeAllKillEffects();
+
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            killEffectRepository.storeUserKillEffectSet(onlinePlayer.getUniqueId());
+        }
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Store Complete!");
 

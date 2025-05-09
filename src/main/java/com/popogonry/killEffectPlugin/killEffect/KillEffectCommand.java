@@ -1,5 +1,6 @@
 package com.popogonry.killEffectPlugin.killEffect;
 
+import com.popogonry.killEffectPlugin.Reference;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,57 +18,81 @@ public class KillEffectCommand implements CommandExecutor {
         if(strings.length == 1) {
             if(commandSender.isOp()) {
                 if(strings[0].equalsIgnoreCase("list")) {
-                    killEffectService.printKillEffectList((Player) commandSender);
+                    killEffectService.printKillEffectList(commandSender);
                 }
-                else if(strings[0].equalsIgnoreCase("store")) {
-                }
-                else if(strings[0].equalsIgnoreCase("load")) {
-
-                }
-                else if(strings[0].equalsIgnoreCase("save")) {
-
+                else if(strings[0].equalsIgnoreCase("userList")) {
+                    killEffectService.printUserKillEffectList(commandSender);
                 }
 
                 else if(strings[0].equalsIgnoreCase("storeAll")) {
                     killEffectRepository.storeKillEffectSet();
                     killEffectRepository.storeAllKillEffects();
+                    commandSender.sendMessage(Reference.prefix_opMessage + "Store Complete.");
                 }
                 else if(strings[0].equalsIgnoreCase("loadAll")) {
                     killEffectRepository.loadKillEffectSet();
                     killEffectRepository.loadAllKillEffects();
+                    commandSender.sendMessage(Reference.prefix_opMessage + "Load Complete.");
+
+
                 }
                 else if(strings[0].equalsIgnoreCase("saveAll")) {
                     killEffectRepository.saveKillEffectSet();
                     killEffectRepository.saveAllKillEffects();
+                    commandSender.sendMessage(Reference.prefix_opMessage + "Save Complete.");
+
+
                 }
-
-
             }
         }
         else if(strings.length == 2) {
             if(commandSender.isOp()) {
-                if(strings[0].equalsIgnoreCase("add")) {
-                    if(killEffectService.createKillEffect(strings[1], "mysticmobName", "lore", 10.0, KillEffectActiveType.ALL)) {
-                        commandSender.sendMessage("추가되었습니다.");
+                if(strings[0].equalsIgnoreCase("store")) {
+                    if(killEffectRepository.storeKillEffect(strings[1])) {
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + ": Store Succeed.");
                     }
                     else {
-                        commandSender.sendMessage("추가 실패했습니다.");
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + ": Store Failed.");
+                    }
+                }
+                else if(strings[0].equalsIgnoreCase("load")) {
+                    if(killEffectRepository.loadKillEffect(strings[1])) {
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + ": Load Succeed.");
+                    }
+                    else {
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + ": Load Failed.");
+                    }
+                }
+                else if(strings[0].equalsIgnoreCase("save")) {
+                    if(killEffectRepository.saveKillEffect(strings[1])) {
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[1] + ": Save Succeed.");
+                    }
+                    else {
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + ": Save Failed.");
+                    }
+                }
+                else if(strings[0].equalsIgnoreCase("add")) {
+                    if(killEffectService.createKillEffect(strings[1], "mysticmobName", "lore", 10.0, KillEffectActiveType.ALL)) {
+                        commandSender.sendMessage(Reference.prefix_opMessage + "추가되었습니다.");
+                    }
+                    else {
+                        commandSender.sendMessage(Reference.prefix_error + "추가 실패했습니다.");
                     }
                 }
                 else if(strings[0].equalsIgnoreCase("remove")) {
                     if(killEffectService.removeKillEffect(strings[1])) {
-                        commandSender.sendMessage("삭제되었습니다.");
+                        commandSender.sendMessage(Reference.prefix_opMessage + "삭제되었습니다.");
                     }
                     else {
-                        commandSender.sendMessage("삭제 실패했습니다.");
+                        commandSender.sendMessage(Reference.prefix_error + "삭제 실패했습니다.");
                     }
                 }
                 else if(strings[0].equalsIgnoreCase("update")) {
                     if(killEffectService.updateKillEffect(strings[1], new KillEffect("name2", "mysticmobName2", "lore2", 10.0, KillEffectActiveType.ALL))) {
-                        commandSender.sendMessage("수정되었습니다.");
+                        commandSender.sendMessage(Reference.prefix_opMessage + "수정되었습니다.");
                     }
                     else {
-                        commandSender.sendMessage("수정 실패했습니다.");
+                        commandSender.sendMessage(Reference.prefix_error + "수정 실패했습니다.");
                     }
                 }
 

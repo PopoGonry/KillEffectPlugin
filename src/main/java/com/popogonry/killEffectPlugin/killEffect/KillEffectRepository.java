@@ -5,6 +5,7 @@ import com.popogonry.killEffectPlugin.KillEffectPlugin;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectSetDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.UserKillEffectSetDataConfig;
+import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.util.*;
@@ -63,7 +64,11 @@ public class KillEffectRepository {
     }
 
     public void loadUserKillEffectSet(UUID uuid) {
-        userKillEffectHashMap.put(uuid, userKillEffectSetDataConfig.loadUserKillEffectSet(uuid));
+        Set<String> killEffectSet = userKillEffectSetDataConfig.loadUserKillEffectSet(uuid);
+        if(killEffectSet == null) {
+            killEffectSet = new HashSet<>();
+        }
+        userKillEffectHashMap.put(uuid, killEffectSet);
     }
 
     public boolean storeKillEffect(String killEffectName) {
@@ -100,6 +105,7 @@ public class KillEffectRepository {
         KillEffectDataConfig killEffectDataConfig = new KillEffectDataConfig(configBasePath + "/killEffects", killEffectName + ".yml");
 
         killEffectHashMap.put(killEffectName, killEffectDataConfig.loadKillEffectData());
+        killEffectSet.add(killEffectName);
         return true;
     }
 
