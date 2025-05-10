@@ -39,10 +39,16 @@ public class KillEffectCommand implements CommandExecutor {
                     commandSender.sendMessage(Reference.prefix_opMessage + "Save Complete.");
 
 
+                } else if (strings[0].equalsIgnoreCase("test")) {
+                    for(int i = 0; i < 36; i++){
+                        killEffectService.createKillEffect("test" + i, "mysticmobName", "lore", 10.0, KillEffectActiveType.ALL);
+                        killEffectService.addKillEffectToUser((Player) commandSender, "test" + i);
+                    }
                 }
             }
             if(strings[0].equalsIgnoreCase("gui")) {
-                KillEffectGUI.openKillEffectSetGUI((Player) commandSender, 1);
+                Player player = (Player) commandSender;
+                KillEffectGUI.openKillEffectSetGUI(player, 1, (Player) commandSender, "normal");
             }
 
 
@@ -85,6 +91,20 @@ public class KillEffectCommand implements CommandExecutor {
                     } else {
                         commandSender.sendMessage(Reference.prefix_error + "수정 실패했습니다.");
                     }
+                } else if (strings[0].equalsIgnoreCase("set")) {
+                    Player player = Bukkit.getOfflinePlayer(strings[1]).getPlayer();
+                    if (player == null) {
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + " 플레이어는 서버에 존재하지 않습니다.");
+                        return false;
+                    }
+                    commandSender.sendMessage(String.valueOf(killEffectService.removeUserKillEffect(player)));
+                } else if (strings[0].equalsIgnoreCase("control")) {
+                    Player player = Bukkit.getOfflinePlayer(strings[1]).getPlayer();
+                    if (player == null) {
+                        commandSender.sendMessage(Reference.prefix_error + strings[1] + " 플레이어는 서버에 존재하지 않습니다.");
+                        return false;
+                    }
+                    commandSender.sendMessage(String.valueOf(KillEffectGUI.openKillEffectSetGUI(player, 1, (Player) commandSender, "control")));
                 }
 
             }

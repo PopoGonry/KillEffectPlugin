@@ -77,27 +77,19 @@ public class KillEffectRepository {
     }
 
     public boolean storeUserKillEffect(UUID uuid) {
-        // userKillEffectHashMap에 Player의 KillEffect이 없을 시, 예외
-        if(!userKillEffectHashMap.containsKey(uuid)) {
-            return false;
-        }
-        userKillEffectDataConfig.storeUserKillEffectData(uuid, userKillEffectHashMap.get(uuid));
+        userKillEffectDataConfig.storeUserKillEffectData(uuid, userKillEffectHashMap.getOrDefault(uuid, ""));
         userKillEffectHashMap.remove(uuid);
         return true;
     }
 
     public boolean saveUserKillEffect(UUID uuid) {
-        // userKillEffectHashMap에 Player의 KillEffect이 없을 시, 예외
-        if(!userKillEffectHashMap.containsKey(uuid)) {
-            return false;
-        }
-        userKillEffectDataConfig.storeUserKillEffectData(uuid, userKillEffectHashMap.get(uuid));
+        userKillEffectDataConfig.storeUserKillEffectData(uuid, userKillEffectHashMap.getOrDefault(uuid, ""));
         return true;
     }
 
     public boolean loadUserKillEffect(UUID uuid) {
         String killEffectName = userKillEffectDataConfig.loadUserKillEffectData(uuid);
-        if(killEffectName == null) {
+        if(killEffectName == null || killEffectName.equals("")) {
             return false;
         }
         userKillEffectHashMap.put(uuid, killEffectName);

@@ -15,6 +15,7 @@ public class KillEffectEvent implements Listener {
         KillEffectRepository killEffectRepository = new KillEffectRepository();
 
         killEffectRepository.loadUserKillEffectSet(player.getUniqueId());
+        killEffectRepository.loadUserKillEffect(player.getUniqueId());
     }
 
     @EventHandler
@@ -23,6 +24,7 @@ public class KillEffectEvent implements Listener {
         KillEffectRepository killEffectRepository = new KillEffectRepository();
 
         killEffectRepository.storeUserKillEffectSet(player.getUniqueId());
+        killEffectRepository.storeUserKillEffect(player.getUniqueId());
     }
 
 }

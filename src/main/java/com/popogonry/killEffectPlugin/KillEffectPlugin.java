@@ -3,6 +3,7 @@ package com.popogonry.killEffectPlugin;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectCommand;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectEvent;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectRepository;
+import com.popogonry.killEffectPlugin.killEffect.gui.KillEffectGUIEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public final class KillEffectPlugin extends JavaPlugin {
         serverInstance = this;
 
         getServer().getPluginManager().registerEvents(new KillEffectEvent(), this);
+        getServer().getPluginManager().registerEvents(new KillEffectGUIEvent(), this);
 
 
         getServer().getPluginCommand("ke").setExecutor(new KillEffectCommand());

@@ -125,6 +125,7 @@ public class KillEffectService {
         }
         return true;
     }
+
     public boolean setUserKillEffect(Player player, String killEffectName) {
         // 킬 이펙트가 존재하지 않을 시, 예외
         if(!KillEffectRepository.killEffectSet.contains(killEffectName)) {
@@ -160,6 +161,27 @@ public class KillEffectService {
         return true;
 
     }
+
+    public boolean removeUserKillEffect(Player player) {
+        // Player가 온라인이 아닐 시,
+        if(!player.isOnline()) {
+            killEffectRepository.loadUserKillEffect(player.getUniqueId());
+        }
+
+        KillEffectRepository.userKillEffectHashMap.remove(player.getUniqueId());
+
+        // Player가 온라인일 시,
+        if(player.isOnline()) {
+            killEffectRepository.saveUserKillEffect(player.getUniqueId());
+        }
+        // Player가 온라인이 아닐 시,
+        else {
+            killEffectRepository.storeUserKillEffect(player.getUniqueId());
+
+        }
+        return true;
+    }
+
 
     public void printUserKillEffectList(CommandSender sender) {
         for (UUID uuid : KillEffectRepository.userKillEffectSetHashMap.keySet()) {
