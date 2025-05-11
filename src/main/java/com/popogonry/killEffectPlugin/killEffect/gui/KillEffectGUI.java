@@ -40,9 +40,9 @@ public class KillEffectGUI {
 
             List<String> userKillEffectLore = new ArrayList<>();
 
-            userKillEffectLore.add(ChatColor.YELLOW + "설명: " + userKillEffect.getLore());
-            userKillEffectLore.add(ChatColor.YELLOW + "쿨타임: " + userKillEffect.getCooldown() + "초");
-            userKillEffectLore.add(ChatColor.YELLOW + "발동 타입: " + userKillEffect.getActiveType());
+            userKillEffectLore.add(ChatColor.YELLOW + "- 설명: " + userKillEffect.getLore());
+            userKillEffectLore.add(ChatColor.YELLOW + "- 쿨타임: " + userKillEffect.getCooldown() + "초");
+            userKillEffectLore.add(ChatColor.YELLOW + "- 발동 타입: " + userKillEffect.getActiveType());
             userKillEffectLore.add(ChatColor.WHITE + "---------------------");
             userKillEffectLore.add(ChatColor.YELLOW + "- 좌클릭: 킬이펙트 장착 해제");
 
@@ -68,9 +68,9 @@ public class KillEffectGUI {
 
             List<String> lore = new ArrayList<>();
 
-            lore.add(ChatColor.YELLOW + "설명: " + killEffect.getLore());
-            lore.add(ChatColor.YELLOW + "쿨타임: " + killEffect.getCooldown() + "초");
-            lore.add(ChatColor.YELLOW + "발동 타입: " + killEffect.getActiveType());
+            lore.add(ChatColor.YELLOW + "- 설명: " + killEffect.getLore());
+            lore.add(ChatColor.YELLOW + "- 쿨타임: " + killEffect.getCooldown() + "초");
+            lore.add(ChatColor.YELLOW + "- 발동 타입: " + killEffect.getActiveType());
             lore.add(ChatColor.WHITE + "---------------------");
             lore.add(ChatColor.YELLOW + "- 좌클릭: 킬이펙트 장착");
 

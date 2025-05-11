@@ -27,6 +27,7 @@ public class KillEffectRepository {
     public static HashMap<UUID, String> userKillEffectHashMap = new HashMap<>();
 
 
+
     public KillEffectRepository() {
         this.configBasePath = KillEffectPlugin.getServerInstance().getDataFolder().getAbsolutePath();
         this.killEffectSetDataConfig = new KillEffectSetDataConfig(configBasePath, KILL_EFFECT_SET_NAME);
