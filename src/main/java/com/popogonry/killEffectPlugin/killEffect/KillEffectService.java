@@ -210,7 +210,14 @@ public class KillEffectService {
 
         List<String> killEffectLore = new ArrayList<>();
 
-        killEffectLore.add(ChatColor.YELLOW + "- 설명: " + killEffect.getLore());
+        String[] splitLore = killEffect.getLore().split("&n");
+
+        killEffectLore.add(ChatColor.YELLOW + "- 설명: " + splitLore[0]);
+
+        for (int j = 1; j < splitLore.length; j++) {
+            killEffectLore.add(ChatColor.YELLOW + "        " + splitLore[j]);
+        }
+
         killEffectLore.add(ChatColor.YELLOW + "- 쿨타임: " + killEffect.getCooldown() + "초");
         killEffectLore.add(ChatColor.YELLOW + "- 발동 타입: " + killEffect.getActiveType());
         killEffectLore.add(ChatColor.WHITE + "---------------------");

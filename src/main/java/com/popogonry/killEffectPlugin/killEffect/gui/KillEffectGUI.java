@@ -40,7 +40,14 @@ public class KillEffectGUI {
 
             List<String> userKillEffectLore = new ArrayList<>();
 
-            userKillEffectLore.add(ChatColor.YELLOW + "- 설명: " + userKillEffect.getLore());
+            String[] splitLore = userKillEffect.getLore().split("&n");
+
+            userKillEffectLore.add(ChatColor.YELLOW + "- 설명: " + splitLore[0]);
+
+            for (int j = 1; j < splitLore.length; j++) {
+                userKillEffectLore.add(ChatColor.YELLOW + "        " + splitLore[j]);
+            }
+
             userKillEffectLore.add(ChatColor.YELLOW + "- 쿨타임: " + userKillEffect.getCooldown() + "초");
             userKillEffectLore.add(ChatColor.YELLOW + "- 발동 타입: " + userKillEffect.getActiveType());
             userKillEffectLore.add(ChatColor.WHITE + "---------------------");
@@ -68,7 +75,16 @@ public class KillEffectGUI {
 
             List<String> lore = new ArrayList<>();
 
-            lore.add(ChatColor.YELLOW + "- 설명: " + killEffect.getLore());
+            String[] splitLore = killEffect.getLore().split("&n");
+            System.out.println(killEffect.getLore());
+            System.out.println(splitLore.toString());
+
+            lore.add(ChatColor.YELLOW + "- 설명: " + splitLore[0]);
+
+            for (int j = 1; j < splitLore.length; j++) {
+                lore.add(ChatColor.YELLOW + "        " + splitLore[j]);
+            }
+
             lore.add(ChatColor.YELLOW + "- 쿨타임: " + killEffect.getCooldown() + "초");
             lore.add(ChatColor.YELLOW + "- 발동 타입: " + killEffect.getActiveType());
             lore.add(ChatColor.WHITE + "---------------------");
