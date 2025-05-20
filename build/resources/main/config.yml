@@ -1,0 +1,17 @@
+# ########################################################### #
+# Kill Effect Plugin Developer: PopoGonry ( rhtjdsh35@gmail.com )
+# ########################################################### #
+
+# Kill Effect Plugin Config File #
+
+# Kill Effect
+Lore-Display-Text: "&RGB{255, 180, 30}- 설명: "
+
+Cooldown-Display-Text: "&RGB{255, 180, 30}- 쿨타임: "
+
+ActiveType-Display-Text: "&RGB{255, 180, 30}- 발동 타입: "
+
+# Kill Effect GUI
+KillEffect-GUI-Name: "&RGB{255, 180, 30}- 킬 이펙트 GUI"
+
+KillEffect-Control-GUI-Name: "&RGB{255, 180, 30}- 킬 이펙트 관리 GUI"
