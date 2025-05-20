@@ -12,7 +12,11 @@ public class PluginDataConfig extends Config {
                 ChatColorUtil.translateRGBColors(this.getConfig().getString("Cooldown-Display-Text")),
                 ChatColorUtil.translateRGBColors(this.getConfig().getString("ActiveType-Display-Text")),
                 ChatColorUtil.translateRGBColors(this.getConfig().getString("KillEffect-GUI-Name")),
-                ChatColorUtil.translateRGBColors(this.getConfig().getString("KillEffect-Control-GUI-Name")));
+                ChatColorUtil.translateRGBColors(this.getConfig().getString("KillEffect-Control-GUI-Name")),
+                this.getConfig().getString("KillEffect-GUI-Left-Page-Item"),
+                this.getConfig().getString("KillEffect-GUI-Right-Page-Item"),
+                this.getConfig().getString("KillEffect-GUI-Information-Item")
+        );
     }
 
     public void loadDefaults() {

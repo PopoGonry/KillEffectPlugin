@@ -17,13 +17,17 @@ repositories {
         url = "https://oss.sonatype.org/content/groups/public/"
     }
     maven { url 'https://mvn.lumine.io/repository/maven-public/' }
+    maven {
+        name = "matteodev"
+        url = uri("https://maven.devs.beer/")
+    }
 }
 
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     compileOnly 'io.lumine:Mythic-Dist:5.6.1'
-
+    compileOnly 'dev.lone:api-itemsadder:4.0.8'
 }
 
 tasks {

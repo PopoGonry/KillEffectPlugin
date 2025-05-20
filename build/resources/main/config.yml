@@ -15,3 +15,9 @@ ActiveType-Display-Text: "&RGB{255, 180, 30}- 발동 타입: "
 KillEffect-GUI-Name: "&RGB{255, 180, 30}- 킬 이펙트 GUI"
 
 KillEffect-Control-GUI-Name: "&RGB{255, 180, 30}- 킬 이펙트 관리 GUI"
+
+KillEffect-GUI-LeftPage-Item: "default"
+
+KillEffect-GUI-RightPage-Item: "default"
+
+KillEffect-GUI-Information-Item: "default"

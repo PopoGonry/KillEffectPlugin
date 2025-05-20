@@ -6,6 +6,7 @@ import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.KillEffect;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectRepository;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectService;
+import dev.lone.itemsadder.api.CustomStack;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -115,14 +116,31 @@ public class KillEffectGUI {
         lore.add(ChatColor.GOLD + "Amount of KillEffects: " + killEffectNameList.size());
         lore.add(ChatColor.GOLD + "Player: " + player.getName());
 
-        inventory.setItem(49, GUI.getCustomItemStack(Material.EMERALD, Reference.prefix + "Page " + page + " / " + maxPage, lore));
+
+        ItemStack leftPage = GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page - 1));
+        ItemStack rightPage = GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page + 1));
+        ItemStack information = GUI.getCustomItemStack(Material.EMERALD, Reference.prefix + "Page " + page + " / " + maxPage, lore);
+
+        if(CustomStack.isInRegistry(PluginRepository.pluginConfig.getKillEffectGUILeftPageItem())) {
+            leftPage.setType(CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUILeftPageItem()).getItemStack().getType());
+        }
+        if(CustomStack.isInRegistry(PluginRepository.pluginConfig.getKillEffectGUIRightPageItem())) {
+            rightPage.setType(CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUIRightPageItem()).getItemStack().getType());
+
+        }
+        if(CustomStack.isInRegistry(PluginRepository.pluginConfig.getKillEffectGUIInformationItem())) {
+            information.setType(CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUIInformationItem()).getItemStack().getType());
+
+        }
+
+        inventory.setItem(49, information);
 
         if(page > 1) {
-            inventory.setItem(48, GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page - 1)));
+            inventory.setItem(48, leftPage);
         }
 
         if(page < maxPage) {
-            inventory.setItem(50, GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page + 1)));
+            inventory.setItem(50, rightPage);
         }
 
         viewPlayer.openInventory(inventory);

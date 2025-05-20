@@ -7,36 +7,64 @@ public class PluginConfig {
     private final String activeTypeDisplayText;
     private final String killEffectGUIName;
     private final String killEffectControlGUIName;
+    private final String killEffectGUILeftPageItem;
+    private final String killEffectGUIRightPageItem;
+    private final String killEffectGUIInformationItem;
 
-    public PluginConfig(String loreDisPlayerText, String cooldownDisplayText, String activeTypeDisplayText, String killEffectGUIName, String killEffectControlGUIName) {
+    public PluginConfig(String loreDisPlayerText, String cooldownDisplayText, String activeTypeDisplayText, String killEffectGUIName, String killEffectControlGUIName, String killEffectGUILeftPageItem, String killEffectGUIRightPageItem, String killEffectGUIInfomationItem) {
         this.loreDisPlayerText = loreDisPlayerText;
         this.cooldownDisplayText = cooldownDisplayText;
         this.activeTypeDisplayText = activeTypeDisplayText;
         this.killEffectGUIName = killEffectGUIName;
         this.killEffectControlGUIName = killEffectControlGUIName;
+        this.killEffectGUILeftPageItem = killEffectGUILeftPageItem;
+        this.killEffectGUIRightPageItem = killEffectGUIRightPageItem;
+        this.killEffectGUIInformationItem = killEffectGUIInfomationItem;
     }
 
     public String getLoreDisPlayerText() {
-        return this.loreDisPlayerText;
+        return loreDisPlayerText;
     }
 
     public String getCooldownDisplayText() {
-        return this.cooldownDisplayText;
+        return cooldownDisplayText;
     }
 
     public String getActiveTypeDisplayText() {
-        return this.activeTypeDisplayText;
+        return activeTypeDisplayText;
     }
 
     public String getKillEffectGUIName() {
-        return this.killEffectGUIName;
+        return killEffectGUIName;
     }
 
     public String getKillEffectControlGUIName() {
-        return this.killEffectControlGUIName;
+        return killEffectControlGUIName;
     }
 
+    public String getKillEffectGUILeftPageItem() {
+        return killEffectGUILeftPageItem;
+    }
+
+    public String getKillEffectGUIRightPageItem() {
+        return killEffectGUIRightPageItem;
+    }
+
+    public String getKillEffectGUIInformationItem() {
+        return killEffectGUIInformationItem;
+    }
+
+    @Override
     public String toString() {
-        return "PluginConfig{loreDisPlayerText='" + this.loreDisPlayerText + "', cooldownDisplayText='" + this.cooldownDisplayText + "', activeTypeDisplayText='" + this.activeTypeDisplayText + "', killEffectGUIName='" + this.killEffectGUIName + "', killEffectControlGUIName='" + this.killEffectControlGUIName + "'}";
+        return "PluginConfig{" +
+                "loreDisPlayerText='" + loreDisPlayerText + '\'' +
+                ", cooldownDisplayText='" + cooldownDisplayText + '\'' +
+                ", activeTypeDisplayText='" + activeTypeDisplayText + '\'' +
+                ", killEffectGUIName='" + killEffectGUIName + '\'' +
+                ", killEffectControlGUIName='" + killEffectControlGUIName + '\'' +
+                ", killEffectGUILeftPageItem='" + killEffectGUILeftPageItem + '\'' +
+                ", killEffectGUIRightPageItem='" + killEffectGUIRightPageItem + '\'' +
+                ", killEffectGUIInformationItem='" + killEffectGUIInformationItem + '\'' +
+                '}';
     }
 }

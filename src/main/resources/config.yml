@@ -16,8 +16,8 @@ KillEffect-GUI-Name: "&RGB{255, 180, 30}- 킬 이펙트 GUI"
 
 KillEffect-Control-GUI-Name: "&RGB{255, 180, 30}- 킬 이펙트 관리 GUI"
 
-KillEffect-GUI-LeftPage-Item: ""
+KillEffect-GUI-LeftPage-Item: "default"
 
-KillEffect-GUI-RightPage-Item: ""
+KillEffect-GUI-RightPage-Item: "default"
 
-KillEffect-GUI-Infomation-Item: ""
+KillEffect-GUI-Information-Item: "default"
