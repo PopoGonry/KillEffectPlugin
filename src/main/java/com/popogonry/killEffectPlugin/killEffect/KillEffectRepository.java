@@ -2,12 +2,10 @@ package com.popogonry.killEffectPlugin.killEffect;
 
 
 import com.popogonry.killEffectPlugin.KillEffectPlugin;
-import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.KillEffectSetDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.UserKillEffectDataConfig;
 import com.popogonry.killEffectPlugin.killEffect.dataConfig.UserKillEffectSetDataConfig;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.util.*;
@@ -155,31 +153,6 @@ public class KillEffectRepository {
 
         for (String killEffectName : set) {
             loadKillEffect(killEffectName);
-        }
-    }
-
-    public void deleteInvalidYmlFiles() {
-        File directory = new File(configBasePath + "/killEffects");
-
-        if (!directory.exists() || !directory.isDirectory()) {
-            return;
-        }
-
-        File[] files = directory.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
-        if (files == null) {
-            return;
-        }
-
-        for (File file : files) {
-            String fileNameWithoutExtension = file.getName().replaceFirst("[.][^.]+$", "");
-
-            if (!killEffectSet.contains(fileNameWithoutExtension)) {
-                if (file.delete()) {
-                    Bukkit.getConsoleSender().sendMessage(Reference.prefix_error + file.getName() + " 파일이 삭제되었습니다.");
-                } else {
-                    Bukkit.getConsoleSender().sendMessage(Reference.prefix_error + file.getName() + " 파일 삭제에 실패했습니다.");
-                }
-            }
         }
     }
 }

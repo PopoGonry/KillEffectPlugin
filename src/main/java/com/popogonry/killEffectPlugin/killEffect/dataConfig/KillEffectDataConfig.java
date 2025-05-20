@@ -4,8 +4,6 @@ import com.popogonry.killEffectPlugin.Config;
 import com.popogonry.killEffectPlugin.killEffect.KillEffect;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectActiveType;
 
-import java.io.File;
-
 public class KillEffectDataConfig extends Config {
 
     public KillEffectDataConfig(String basePath, String fileName) {
@@ -32,7 +30,6 @@ public class KillEffectDataConfig extends Config {
                 KillEffectActiveType.valueOf(getConfig().getString("Active-Type"))
         );
     }
-
 
     @Override
     public void loadDefaults() {
