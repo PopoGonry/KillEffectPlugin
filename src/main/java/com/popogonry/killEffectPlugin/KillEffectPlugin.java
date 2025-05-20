@@ -37,6 +37,8 @@ public final class KillEffectPlugin extends JavaPlugin {
 
         }
 
+        killEffectRepository.deleteInvalidYmlFiles();
+
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Load Complete!");
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Plugin Enabled (Developer: PopoGonry)");
