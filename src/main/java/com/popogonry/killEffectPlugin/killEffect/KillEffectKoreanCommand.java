@@ -3,6 +3,7 @@ package com.popogonry.killEffectPlugin.killEffect;
 import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.gui.KillEffectGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,6 +28,8 @@ public class KillEffectKoreanCommand implements CommandExecutor {
 
             Player player = (Player) commandSender;
             KillEffectGUI.openKillEffectSetGUI(player, 1, (Player) commandSender, "normal");
+            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
+
         }
         if(commandSender.isOp()) {
             if(strings.length == 1) {
@@ -85,15 +88,21 @@ public class KillEffectKoreanCommand implements CommandExecutor {
                         commandSender.sendMessage(Reference.prefix_error + strings[1] + " 플레이어가 서버에 존재하지 않습니다.");
                         return false;
                     }
-                    commandSender.sendMessage(String.valueOf(KillEffectGUI.openKillEffectSetGUI(player, 1, (Player) commandSender, "control")));
+                    KillEffectGUI.openKillEffectSetGUI(player, 1, (Player) commandSender, "control");
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
+
                 }
                 else if (strings[0].equalsIgnoreCase("쿠폰")) {
                     ItemStack killEffectBook = killEffectService.getKillEffectBook(strings[1]);
+                    Player player = (Player) commandSender;
                     if (killEffectBook != null) {
-                        Player player = (Player) commandSender;
                         player.getInventory().addItem(killEffectBook);
+                        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
+
                     } else {
-                        commandSender.sendMessage(Reference.prefix_error + "존재 하지 않는 킬이펙트입니다.");
+                        player.sendMessage(Reference.prefix_error + "존재 하지 않는 킬이펙트입니다.");
+                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+
                     }
                 }
             }
@@ -104,8 +113,12 @@ public class KillEffectKoreanCommand implements CommandExecutor {
                         commandSender.sendMessage(Reference.prefix_error + strings[1] + " 플레이어는 서버에 존재하지 않습니다.");
                         return false;
                     }
-                    commandSender.sendMessage(String.valueOf(killEffectService.addKillEffectToUser(player, strings[2])));
-
+                    if(killEffectService.addKillEffectToUser(player, strings[2])) {
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[2] + " 킬이펙트를 " + strings[1] + " 에게 추가하였습니다.");
+                    }
+                    else {
+                        commandSender.sendMessage(Reference.prefix_error + "추가 실패 하였습니다.");
+                    }
                 }
                 else if (strings[0].equalsIgnoreCase("제거")) {
                     Player player = Bukkit.getOfflinePlayer(strings[1]).getPlayer();
@@ -113,7 +126,13 @@ public class KillEffectKoreanCommand implements CommandExecutor {
                         commandSender.sendMessage(Reference.prefix_error + strings[1] + " 플레이어는 서버에 존재하지 않습니다.");
                         return false;
                     }
-                    commandSender.sendMessage(String.valueOf(killEffectService.removeKillEffectFromUser(player, strings[2])));
+
+                    if(killEffectService.removeKillEffectFromUser(player, strings[2])) {
+                        commandSender.sendMessage(Reference.prefix_opMessage + strings[2] + " 킬이펙트를 " + strings[1] + " 에게서 제거하였습니다.");
+                    }
+                    else {
+                        commandSender.sendMessage(Reference.prefix_error + "제거 실패 하였습니다.");
+                    }
                 }
                 else if (strings[0].equalsIgnoreCase("설정")) {
 
