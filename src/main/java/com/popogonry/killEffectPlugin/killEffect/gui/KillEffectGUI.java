@@ -5,6 +5,7 @@ import com.popogonry.killEffectPlugin.PluginRepository;
 import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.KillEffect;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectRepository;
+import com.popogonry.killEffectPlugin.killEffect.KillEffectService;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -72,13 +73,17 @@ public class KillEffectGUI {
             ItemMeta itemMeta = itemStack.getItemMeta();
             KillEffect killEffect = KillEffectRepository.killEffectHashMap.get(killEffectNameList.get(i));
 
+            if(killEffect == null) {
+                KillEffectService killEffectService = new KillEffectService();
+                killEffectService.removeKillEffectFromUser(player, killEffectNameList.get(i));
+                continue;
+            }
+
             itemMeta.setDisplayName(ChatColor.GOLD + killEffect.getName());
 
             List<String> lore = new ArrayList<>();
 
             String[] splitLore = killEffect.getLore().split("&n");
-            System.out.println(killEffect.getLore());
-            System.out.println(splitLore.toString());
 
             lore.add(PluginRepository.pluginConfig.getLoreDisPlayerText() + ChatColor.WHITE + splitLore[0]);
 

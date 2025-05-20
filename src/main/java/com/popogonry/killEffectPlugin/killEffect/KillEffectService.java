@@ -49,6 +49,8 @@ public class KillEffectService {
         removeKillEffect(oldKillEffectName);
         createKillEffect(newKillEffect.getName(), newKillEffect.getMysticmobName(), newKillEffect.getLore(), newKillEffect.getCooldown(), newKillEffect.getActiveType());
 
+        killEffectRepository.saveKillEffectSet();
+        killEffectRepository.saveKillEffect(newKillEffect.getName());
         return true;
     }
 
@@ -61,6 +63,8 @@ public class KillEffectService {
         KillEffectRepository.killEffectSet.remove(name);
         KillEffectRepository.killEffectHashMap.remove(name);
 
+        killEffectRepository.saveKillEffectSet();
+        killEffectRepository.saveKillEffect(name);
         return true;
     }
 
@@ -97,10 +101,10 @@ public class KillEffectService {
     }
 
     public boolean removeKillEffectFromUser(Player player, String killEffectName) {
-        // 킬 이펙트가 존재하지 않을 시, 예외
-        if(!KillEffectRepository.killEffectSet.contains(killEffectName)) {
-            return false;
-        }
+//        // 킬 이펙트가 존재하지 않을 시, 예외
+//        if(!KillEffectRepository.killEffectSet.contains(killEffectName)) {
+//            return false;
+//        }
 
         // Player가 온라인이 아닐 시,
         if(!player.isOnline()) {

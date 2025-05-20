@@ -38,6 +38,9 @@ public final class KillEffectPlugin extends JavaPlugin {
             killEffectRepository.loadUserKillEffect(onlinePlayer.getUniqueId());
 
         }
+
+        killEffectRepository.deleteInvalidYmlFiles();
+
         pluginRepository.loadPluginDataConfig();
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Load Complete!");
