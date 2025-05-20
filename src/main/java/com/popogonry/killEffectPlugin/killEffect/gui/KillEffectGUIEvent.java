@@ -1,5 +1,6 @@
 package com.popogonry.killEffectPlugin.killEffect.gui;
 
+import com.popogonry.killEffectPlugin.PluginRepository;
 import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectService;
 import org.bukkit.Bukkit;
@@ -14,10 +15,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 public class KillEffectGUIEvent implements Listener {
     @EventHandler
     public static void onClickKillEffectsGUI(InventoryClickEvent event) {
-        if(event.getView().getTitle().equalsIgnoreCase(Reference.prefix_normal + "Kill Effect GUI")
+        if(event.getView().getTitle().equalsIgnoreCase(PluginRepository.pluginConfig.getKillEffectGUIName())
                 && event.getCurrentItem() != null
                 && event.getCurrentItem().getType() != Material.AIR) {
 
@@ -79,7 +82,7 @@ public class KillEffectGUIEvent implements Listener {
         }
     }@EventHandler
     public static void onClickKillEffectsControlGUI(InventoryClickEvent event) {
-        if(event.getView().getTitle().contains("Kill Effect Control GUI")
+        if(event.getView().getTitle().equalsIgnoreCase(PluginRepository.pluginConfig.getKillEffectControlGUIName())
                 && event.getCurrentItem() != null
                 && event.getCurrentItem().getType() != Material.AIR) {
 
@@ -88,7 +91,8 @@ public class KillEffectGUIEvent implements Listener {
             Inventory inventory = event.getInventory();
 
             Player viewPlayer = (Player) event.getWhoClicked();
-            Player player = Bukkit.getPlayer(event.getView().getTitle().split(" ")[1].replaceAll(" ", ""));
+
+            Player player = Bukkit.getPlayer(inventory.getItem(49).getItemMeta().getLore().get(1).split(" ")[1]);
 
             if(player == null) {
                 return;

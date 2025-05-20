@@ -1,6 +1,7 @@
 package com.popogonry.killEffectPlugin.killEffect;
 
 import com.popogonry.killEffectPlugin.GUI;
+import com.popogonry.killEffectPlugin.PluginRepository;
 import com.popogonry.killEffectPlugin.Reference;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -212,16 +213,16 @@ public class KillEffectService {
 
         String[] splitLore = killEffect.getLore().split("&n");
 
-        killEffectLore.add(ChatColor.YELLOW + "- 설명: " + splitLore[0]);
+        killEffectLore.add(PluginRepository.pluginConfig.getLoreDisPlayerText() + ChatColor.WHITE + splitLore[0]);
 
         for (int j = 1; j < splitLore.length; j++) {
             killEffectLore.add(ChatColor.YELLOW + "        " + splitLore[j]);
         }
 
-        killEffectLore.add(ChatColor.YELLOW + "- 쿨타임: " + killEffect.getCooldown() + "초");
-        killEffectLore.add(ChatColor.YELLOW + "- 발동 타입: " + killEffect.getActiveType());
+        killEffectLore.add(PluginRepository.pluginConfig.getCooldownDisplayText() + ChatColor.WHITE + killEffect.getCooldown() + "초");
+        killEffectLore.add(PluginRepository.pluginConfig.getActiveTypeDisplayText() + ChatColor.WHITE + killEffect.getActiveType());
         killEffectLore.add(ChatColor.WHITE + "---------------------");
-        killEffectLore.add(ChatColor.YELLOW + "- 우클릭: 킬이펙트 추가");
+        killEffectLore.add(ChatColor.GOLD + "- 우클릭: 킬이펙트 추가");
         killEffectLore.add(ChatColor.DARK_GRAY + "KillEffect");
 
 

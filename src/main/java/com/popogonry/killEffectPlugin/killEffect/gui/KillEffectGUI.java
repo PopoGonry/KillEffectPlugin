@@ -1,6 +1,7 @@
 package com.popogonry.killEffectPlugin.killEffect.gui;
 
 import com.popogonry.killEffectPlugin.GUI;
+import com.popogonry.killEffectPlugin.PluginRepository;
 import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.KillEffect;
 import com.popogonry.killEffectPlugin.killEffect.KillEffectRepository;
@@ -20,11 +21,11 @@ public class KillEffectGUI {
 
         if(type.equalsIgnoreCase("normal")) {
             viewPlayer = player;
-            inventory = Bukkit.createInventory(player, 54, Reference.prefix_normal + "Kill Effect GUI");
+            inventory = Bukkit.createInventory(player, 54, PluginRepository.pluginConfig.getKillEffectGUIName());
         }
 
         else if (type.equalsIgnoreCase("control")) {
-            inventory = Bukkit.createInventory(player, 54, Reference.prefix_normal +  player.getName() + " : Kill Effect Control GUI");
+            inventory = Bukkit.createInventory(player, 54, PluginRepository.pluginConfig.getKillEffectControlGUIName());
         }
         else {
             return false;
@@ -42,16 +43,16 @@ public class KillEffectGUI {
 
             String[] splitLore = userKillEffect.getLore().split("&n");
 
-            userKillEffectLore.add(ChatColor.YELLOW + "- 설명: " + splitLore[0]);
+            userKillEffectLore.add(PluginRepository.pluginConfig.getLoreDisPlayerText() + ChatColor.WHITE + splitLore[0]);
 
             for (int j = 1; j < splitLore.length; j++) {
                 userKillEffectLore.add(ChatColor.YELLOW + "        " + splitLore[j]);
             }
 
-            userKillEffectLore.add(ChatColor.YELLOW + "- 쿨타임: " + userKillEffect.getCooldown() + "초");
-            userKillEffectLore.add(ChatColor.YELLOW + "- 발동 타입: " + userKillEffect.getActiveType());
+            userKillEffectLore.add(PluginRepository.pluginConfig.getCooldownDisplayText() + ChatColor.WHITE + userKillEffect.getCooldown() + "초");
+            userKillEffectLore.add(PluginRepository.pluginConfig.getActiveTypeDisplayText() + ChatColor.WHITE + userKillEffect.getActiveType());
             userKillEffectLore.add(ChatColor.WHITE + "---------------------");
-            userKillEffectLore.add(ChatColor.YELLOW + "- 좌클릭: 킬이펙트 장착 해제");
+            userKillEffectLore.add(ChatColor.GOLD + "- 좌클릭: 킬이펙트 장착 해제");
 
             if (type.equalsIgnoreCase("control")) {
                 userKillEffectLore.add(ChatColor.RED + "- 쉬프트 + 우클릭: 킬이펙트 삭제");
@@ -79,16 +80,16 @@ public class KillEffectGUI {
             System.out.println(killEffect.getLore());
             System.out.println(splitLore.toString());
 
-            lore.add(ChatColor.YELLOW + "- 설명: " + splitLore[0]);
+            lore.add(PluginRepository.pluginConfig.getLoreDisPlayerText() + ChatColor.WHITE + splitLore[0]);
 
             for (int j = 1; j < splitLore.length; j++) {
                 lore.add(ChatColor.YELLOW + "        " + splitLore[j]);
             }
 
-            lore.add(ChatColor.YELLOW + "- 쿨타임: " + killEffect.getCooldown() + "초");
-            lore.add(ChatColor.YELLOW + "- 발동 타입: " + killEffect.getActiveType());
+            lore.add(PluginRepository.pluginConfig.getCooldownDisplayText() + ChatColor.WHITE + killEffect.getCooldown() + "초");
+            lore.add(PluginRepository.pluginConfig.getActiveTypeDisplayText() + ChatColor.WHITE + killEffect.getActiveType());
             lore.add(ChatColor.WHITE + "---------------------");
-            lore.add(ChatColor.YELLOW + "- 좌클릭: 킬이펙트 장착");
+            lore.add(ChatColor.GOLD + "- 좌클릭: 킬이펙트 장착");
 
             if (type.equalsIgnoreCase("control")) {
                 lore.add(ChatColor.RED + "- 쉬프트 + 우클릭: 킬이펙트 삭제");
@@ -105,7 +106,11 @@ public class KillEffectGUI {
         int maxPage = killEffectNameList.size() / 36;
         maxPage += killEffectNameList.size() % 36 == 0 ? 0 : 1;
 
-        inventory.setItem(49, GUI.getCustomItemStack(Material.EMERALD, Reference.prefix + "Page " + page + " / " + maxPage, Collections.singletonList(ChatColor.GOLD + "Amount of KillEffects: " + killEffectNameList.size())));
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GOLD + "Amount of KillEffects: " + killEffectNameList.size());
+        lore.add(ChatColor.GOLD + "Player: " + player.getName());
+
+        inventory.setItem(49, GUI.getCustomItemStack(Material.EMERALD, Reference.prefix + "Page " + page + " / " + maxPage, lore));
 
         if(page > 1) {
             inventory.setItem(48, GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page - 1)));

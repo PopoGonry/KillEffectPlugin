@@ -15,6 +15,7 @@ public final class KillEffectPlugin extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         serverInstance = this;
+        saveDefaultConfig();
 
         getServer().getPluginManager().registerEvents(new KillEffectEvent(), this);
         getServer().getPluginManager().registerEvents(new KillEffectGUIEvent(), this);
@@ -25,6 +26,7 @@ public final class KillEffectPlugin extends JavaPlugin {
 
         // killEffect data load
         KillEffectRepository killEffectRepository = new KillEffectRepository();
+        PluginRepository pluginRepository = new PluginRepository();
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Load Start...");
 
@@ -36,6 +38,7 @@ public final class KillEffectPlugin extends JavaPlugin {
             killEffectRepository.loadUserKillEffect(onlinePlayer.getUniqueId());
 
         }
+        pluginRepository.loadPluginDataConfig();
 
         Bukkit.getConsoleSender().sendMessage(Reference.prefix_normal + "KillEffect Data Load Complete!");
 
