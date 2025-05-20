@@ -3,7 +3,8 @@ version: '1.0-SNAPSHOT'
 main: com.popogonry.killEffectPlugin.KillEffectPlugin
 api-version: '1.21'
 
-depend: ["MythicMobs"]
+depend: ["MythicMobs", "ItemsAdder"]
+
 
 commands:
   ke:
