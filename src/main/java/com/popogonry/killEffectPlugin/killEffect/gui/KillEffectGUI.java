@@ -111,36 +111,50 @@ public class KillEffectGUI {
         // 48 49 50
         int maxPage = killEffectNameList.size() / 36;
         maxPage += killEffectNameList.size() % 36 == 0 ? 0 : 1;
+        maxPage += maxPage == 0 ? 1 : 0;
 
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.GOLD + "Amount of KillEffects: " + killEffectNameList.size());
-        lore.add(ChatColor.GOLD + "Player: " + player.getName());
+        lore.add(ChatColor.GOLD + "킬이펙트 갯수: " + killEffectNameList.size());
 
+         if (type.equalsIgnoreCase("control")) {
+             lore.add(ChatColor.GOLD + "Player: " + player.getName());
+         }
 
         ItemStack leftPage = GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page - 1));
         ItemStack rightPage = GUI.getCustomItemStack(Material.PAPER, Reference.prefix + "To " + (page + 1));
         ItemStack information = GUI.getCustomItemStack(Material.EMERALD, Reference.prefix + "Page " + page + " / " + maxPage, lore);
 
         if(CustomStack.isInRegistry(PluginRepository.pluginConfig.getKillEffectGUILeftPageItem())) {
-            leftPage.setType(CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUILeftPageItem()).getItemStack().getType());
+            leftPage = CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUILeftPageItem()).getItemStack();
+            ItemMeta itemMeta = leftPage.getItemMeta();
+            itemMeta.setDisplayName(Reference.prefix + (page - 1) + " 페이지로");
+
+            leftPage.setItemMeta(itemMeta);
         }
         if(CustomStack.isInRegistry(PluginRepository.pluginConfig.getKillEffectGUIRightPageItem())) {
-            rightPage.setType(CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUIRightPageItem()).getItemStack().getType());
+            rightPage = CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUIRightPageItem()).getItemStack();
+            ItemMeta itemMeta = rightPage.getItemMeta();
+            itemMeta.setDisplayName(Reference.prefix + (page + 1) + " 페이지로");
 
+            rightPage.setItemMeta(itemMeta);
         }
         if(CustomStack.isInRegistry(PluginRepository.pluginConfig.getKillEffectGUIInformationItem())) {
-            information.setType(CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUIInformationItem()).getItemStack().getType());
+            information = CustomStack.getInstance(PluginRepository.pluginConfig.getKillEffectGUIInformationItem()).getItemStack();
+            ItemMeta itemMeta = information.getItemMeta();
+            itemMeta.setDisplayName(Reference.prefix + "페이지 " + page + " / " + maxPage);
+            itemMeta.setLore(lore);
 
+            information.setItemMeta(itemMeta);
         }
 
         inventory.setItem(49, information);
 
         if(page > 1) {
-            inventory.setItem(48, leftPage);
+            inventory.setItem(45, leftPage);
         }
 
         if(page < maxPage) {
-            inventory.setItem(50, rightPage);
+            inventory.setItem(53, rightPage);
         }
 
         viewPlayer.openInventory(inventory);

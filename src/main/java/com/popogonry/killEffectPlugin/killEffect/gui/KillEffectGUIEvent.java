@@ -66,12 +66,12 @@ public class KillEffectGUIEvent implements Listener {
                 }
             }
 
-            else if(48 <= slot && slot <= 50) {
+            else if(45 <= slot && slot <= 53) {
                 ItemStack itemStack = inventory.getItem(slot);
                 ItemMeta itemMeta = itemStack.getItemMeta();
-                if(itemMeta.getDisplayName().contains("To")) {
+                if(itemMeta.getDisplayName().contains("페이지로")) {
                     String[] strings = itemMeta.getDisplayName().split(" ");
-                    KillEffectGUI.openKillEffectSetGUI(player, Integer.parseInt(strings[1]), player, "normal");
+                    KillEffectGUI.openKillEffectSetGUI(player, Integer.parseInt(strings[0]), player, "normal");
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
                 }
             }
@@ -156,12 +156,12 @@ public class KillEffectGUIEvent implements Listener {
                 }
             }
 
-            else if(48 <= slot && slot <= 50) {
+            else if(45 <= slot && slot <= 53) {
                 ItemStack itemStack = inventory.getItem(slot);
                 ItemMeta itemMeta = itemStack.getItemMeta();
-                if(itemMeta.getDisplayName().contains("To")) {
+                if(itemMeta.getDisplayName().contains("페이지로")) {
                     String[] strings = itemMeta.getDisplayName().split(" ");
-                    KillEffectGUI.openKillEffectSetGUI(player, Integer.parseInt(strings[1]), viewPlayer, "control");
+                    KillEffectGUI.openKillEffectSetGUI(player, Integer.parseInt(strings[0]), viewPlayer, "control");
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
                 }
             }

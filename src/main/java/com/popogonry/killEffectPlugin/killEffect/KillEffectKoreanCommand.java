@@ -1,5 +1,6 @@
 package com.popogonry.killEffectPlugin.killEffect;
 
+import com.popogonry.killEffectPlugin.PluginRepository;
 import com.popogonry.killEffectPlugin.Reference;
 import com.popogonry.killEffectPlugin.killEffect.gui.KillEffectGUI;
 import org.bukkit.Bukkit;
@@ -45,6 +46,11 @@ public class KillEffectKoreanCommand implements CommandExecutor {
                     killEffectRepository.saveKillEffectSet();
                     killEffectRepository.saveAllKillEffects();
                     commandSender.sendMessage(Reference.prefix_opMessage + "킬이펙트 전체를 저장하였습니다. (메모리 -> 파일)");
+                }
+                else if (strings[0].equalsIgnoreCase("플러그인로드")) {
+                    PluginRepository pluginRepository = new PluginRepository();
+                    pluginRepository.loadPluginDataConfig();
+                    commandSender.sendMessage(Reference.prefix_opMessage + "플러그인 설정을 불러왔습니다.");
                 }
             }
             else if(strings.length == 2) {

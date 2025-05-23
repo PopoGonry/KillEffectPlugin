@@ -42,7 +42,7 @@ public class KillEffectCommand implements CommandExecutor {
 
 
                 } else if (strings[0].equalsIgnoreCase("test")) {
-                    for(int i = 0; i < 36; i++){
+                    for(int i = 0; i < 100; i++){
                         killEffectService.createKillEffect("test" + i, "mysticmobName", "lore", 10.0, KillEffectActiveType.ALL);
                         killEffectService.addKillEffectToUser((Player) commandSender, "test" + i);
                     }
